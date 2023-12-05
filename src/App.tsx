@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import logo from './Nisha_Logo.png';
 import './App.css';
+import Button from '@mui/material/Button';
+
 import {
     ClerkProvider,
     SignedIn,
@@ -8,6 +10,7 @@ import {
     RedirectToSignIn,
     SignIn,
     SignUp,
+    SignOutButton,
     UserButton
 } from "@clerk/clerk-react";
 import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
@@ -74,7 +77,7 @@ function WelcomePage() {
             <div className="App">
                 <header className="App-header">
                     <img src={logo} className="App-logo" alt="logo" />
-                    <button onClick={handleClick}>Let's Start!</button>
+                    <Button variant="contained" size="large" onClick={handleClick}>Let's Start!</Button>
                 </header>
             </div>
         </>
@@ -86,6 +89,7 @@ function ProtectedPage() {
         <>
             <h1>Protected page</h1>
             <UserButton />
+            <SignOutButton />
         </>
     );
 }
