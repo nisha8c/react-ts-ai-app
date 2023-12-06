@@ -1,19 +1,9 @@
-import React, {useState} from 'react';
-import logo from './Nisha_Logo.png';
+import React from 'react';
 import './App.css';
-import Button from '@mui/material/Button';
 
-import {
-    ClerkProvider,
-    SignedIn,
-    SignedOut,
-    RedirectToSignIn,
-    SignIn,
-    SignUp,
-    SignOutButton,
-    UserButton
-} from "@clerk/clerk-react";
+import { ClerkProvider, SignIn, SignUp } from "@clerk/clerk-react";
 import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
+import {WithSignInProtectionHOC, Welcome, LandingPage, Page1, Page2, PageNotFound} from "./components";
 
 if (!process.env.REACT_APP_CLERK_PUBLISHABLE_KEY) {
     throw new Error("Missing Publishable Key")
@@ -36,7 +26,7 @@ function ClerkProviderWithRoutes() {
             navigate={(to) => navigate(to)}
         >
             <Routes>
-                <Route path={"/"} element={<WelcomePage />}/>
+                <Route path={"/"} element={<Welcome />}/>
 
                 <Route
                     path="/sign-in/*"
@@ -46,52 +36,16 @@ function ClerkProviderWithRoutes() {
                     path="/sign-up/*"
                     element={<SignUp routing="path" path="/sign-up" />}
                 />
-                <Route
-                    path="/protected"
-                    element={
-                        <>
-                            <SignedIn>
-                                <ProtectedPage />
-                            </SignedIn>
-                            <SignedOut>
-                                <RedirectToSignIn />
-                            </SignedOut>
-                        </>
-                    }
-                />
+                <Route path="/protected" element={WithSignInProtectionHOC(LandingPage)} />
+                <Route path="/page1" element={WithSignInProtectionHOC(Page1)} />
+                <Route path="/page2" element={WithSignInProtectionHOC(Page2)} />
+
+                <Route path="*" element={<PageNotFound />} />
             </Routes>
         </ClerkProvider>
     );
 }
 
-function WelcomePage() {
-    const navigate = useNavigate();
-    const [startClicked, setStartClicked] = useState(false);
 
-    const handleClick = () => {
-        setStartClicked(true);
-        navigate('/protected');
-    }
-    return (
-        <>
-            <div className="App">
-                <header className="App-header">
-                    <img src={logo} className="App-logo" alt="logo" />
-                    <Button variant="contained" size="large" onClick={handleClick}>Let's Start!</Button>
-                </header>
-            </div>
-        </>
-    );
-}
-
-function ProtectedPage() {
-    return (
-        <>
-            <h1>Protected page</h1>
-            <UserButton />
-            <SignOutButton />
-        </>
-    );
-}
 
 export default App;
