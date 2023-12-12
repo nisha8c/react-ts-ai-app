@@ -1,5 +1,5 @@
 import React from 'react';
-import './App.css';
+import './App.scss';
 
 import { ClerkProvider, SignIn, SignUp } from "@clerk/clerk-react";
 import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
