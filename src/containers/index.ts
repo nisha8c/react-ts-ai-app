@@ -4,7 +4,7 @@ import LandingPage from "./LandingPage/LandingPage";
 import Page1 from "./Page1/Page1";
 import Page2 from "./Page2/Page2";
 import SocialMedia from "./SocialMedia/SocialMedia";
-
+import About from "./About/About";
 import PageNotFound from "./PageNotFound/PageNotFound";
 
 
@@ -15,5 +15,6 @@ export {
     Page1,
     Page2,
     SocialMedia,
-    PageNotFound
+    PageNotFound,
+    About
 }
