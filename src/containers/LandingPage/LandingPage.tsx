@@ -4,6 +4,11 @@ import AppWrap from "../../wrapper/AppWrap";
 import { urlFor, client } from '../../client';
 import { motion } from 'framer-motion';
 import './LandingPage.scss'
+import {AlertColor, TextField} from "@mui/material";
+import { InputLabel } from '@mui/material';
+import Button from "@mui/material/Button";
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 
 interface ICountry {
     name: string;
@@ -17,6 +22,10 @@ function LandingPage() {
     const [countries, setCountries] = useState<ICountry[]>([]);
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [userAnswer, setUserAnswer] = useState('');
+
+    const [open, setOpen] = useState(false);
+    const [message, setMessage] = useState('');
+    const [severity, setSeverity] = useState('success');
 
     // Fetch the data from Sanity
     useEffect(() => {
@@ -35,19 +44,29 @@ function LandingPage() {
         setUserAnswer(event.target.value);
     };
 
+    const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpen(false);
+    };
+
     // Function to handle form submission
     const handleSubmit = (event: any) => {
         event.preventDefault();
-        // Check the user's answer and proceed to the next question
 
         if (userAnswer.toLowerCase() === countries[currentQuestion].capital.toLowerCase()) {
-            alert('Correct!');
+            setMessage('Correct!');
+            setSeverity('success');
             setCurrentQuestion(currentQuestion + 1);
             setUserAnswer('');
         } else {
-            alert('Sorry, that is not correct.');
+            setMessage('Sorry, that is not correct.');
+            setSeverity('error');
         }
 
+        setOpen(true);
 
     };
 
@@ -66,12 +85,19 @@ function LandingPage() {
                         className="flag-form"
                     >
                         <h1>{countries[currentQuestion].name}</h1>
-                        <form onSubmit={handleSubmit}>
-                            <label>
+                        <form onSubmit={handleSubmit} className={'form'}>
+                            <InputLabel>
                                 What is the capital of this country?
-                                <input type="text" value={userAnswer} onChange={handleInputChange} />
-                            </label>
-                            <button type="submit">Submit</button>
+
+                            </InputLabel>
+                            <TextField id="outlined-basic"
+                                       label="Enter Your Answer Here..."
+                                       variant="outlined"
+                                       value={userAnswer}
+                                       type={"text"}
+                                       onChange={handleInputChange}
+                            />
+                            <Button type="submit" variant="outlined" size={'large'}>Submit</Button>
                         </form>
                     </motion.div>
 
@@ -86,6 +112,12 @@ function LandingPage() {
             ) : (
                 <div>Game Over</div>
             )}
+
+            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+                <Alert onClose={handleClose} severity={severity as AlertColor} sx={{ width: '100%' }}>
+                    {message}
+                </Alert>
+            </Snackbar>
         </div>
     );
 

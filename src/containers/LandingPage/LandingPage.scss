@@ -53,3 +53,13 @@
     margin-right: 0rem;
   }
 }
+
+.form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  // Add space after every child element
+   * {
+    margin-bottom: 20px; // Adjust this value as needed
+  }
+}
