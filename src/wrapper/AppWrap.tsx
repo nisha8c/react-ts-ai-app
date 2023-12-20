@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import { SocialMedia } from '../components';
+import { SocialMedia } from '../containers';
 
 const AppWrap = (Component: FC, idName: string, classNames: string) => function HOC() {
     return (

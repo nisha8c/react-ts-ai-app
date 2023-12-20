@@ -2,7 +2,7 @@ import {UserButton} from "@clerk/clerk-react";
 import React, {useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 import Button from "@mui/material/Button";
-import AppWrap from "../wrapper/AppWrap";
+import AppWrap from "../../wrapper/AppWrap";
 
 function LandingPage() {
     const navigate = useNavigate();

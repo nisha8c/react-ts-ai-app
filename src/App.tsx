@@ -3,7 +3,7 @@ import './App.scss';
 
 import { ClerkProvider, SignIn, SignUp } from "@clerk/clerk-react";
 import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
-import {WithSignInProtectionHOC, Welcome, LandingPage, Page1, Page2, PageNotFound} from "./components";
+import {WithSignInProtectionHOC, Welcome, LandingPage, Page1, Page2, PageNotFound} from "./containers";
 
 if (!process.env.REACT_APP_CLERK_PUBLISHABLE_KEY) {
     throw new Error("Missing Publishable Key")
