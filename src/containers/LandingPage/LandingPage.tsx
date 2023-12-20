@@ -1,18 +1,12 @@
-import {UserButton} from "@clerk/clerk-react";
 import React, {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
-import Button from "@mui/material/Button";
 import AppWrap from "../../wrapper/AppWrap";
 import { urlFor, client } from '../../client';
 
 interface ICountry {
     name: string;
     capital: string;
-    imageurl: {
-        asset: {
-            url: string;
-        };
-    };
+    imgUrl: any
 }
 
 
@@ -60,18 +54,23 @@ function LandingPage() {
 
     return (
         <div className={"landing-page"}>
-            <div>
-                <h1>{countries[currentQuestion].name}</h1>
-                <img src={countries[currentQuestion].imageurl.asset.url} alt={countries[currentQuestion].name} />
-                <form onSubmit={handleSubmit}>
-                    <label>
-                        What is the capital of this country?
-                        <input type="text" value={userAnswer} onChange={handleInputChange} />
-                    </label>
-                    <button type="submit">Submit</button>
-                </form>
-            </div>
+            {currentQuestion < countries.length ? (
+                <div>
+                    <h1>{countries[currentQuestion].name}</h1>
+                    <img src={urlFor(countries[currentQuestion].imgUrl)} alt={countries[currentQuestion].name} />
+                    <form onSubmit={handleSubmit}>
+                        <label>
+                            What is the capital of this country?
+                            <input type="text" value={userAnswer} onChange={handleInputChange} />
+                        </label>
+                        <button type="submit">Submit</button>
+                    </form>
+                </div>
+            ) : (
+                <div>Game Over</div>
+            )}
         </div>
     );
+
 }
 export default AppWrap(LandingPage, 'landing-page', 'landing-page');
