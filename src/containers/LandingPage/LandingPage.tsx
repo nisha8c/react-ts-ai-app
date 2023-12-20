@@ -2,6 +2,8 @@ import React, {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import AppWrap from "../../wrapper/AppWrap";
 import { urlFor, client } from '../../client';
+import { motion } from 'framer-motion';
+import './LandingPage.scss'
 
 interface ICountry {
     name: string;
@@ -56,15 +58,30 @@ function LandingPage() {
         <div className={"landing-page"}>
             {currentQuestion < countries.length ? (
                 <div>
-                    <h1>{countries[currentQuestion].name}</h1>
-                    <img src={urlFor(countries[currentQuestion].imgUrl)} alt={countries[currentQuestion].name} />
-                    <form onSubmit={handleSubmit}>
-                        <label>
-                            What is the capital of this country?
-                            <input type="text" value={userAnswer} onChange={handleInputChange} />
-                        </label>
-                        <button type="submit">Submit</button>
-                    </form>
+
+
+                    <motion.div
+                        whileInView={{ opacity: [0, 1] }}
+                        transition={{ duration: 0.5, delayChildren: 0.5 }}
+                        className="flag-form"
+                    >
+                        <h1>{countries[currentQuestion].name}</h1>
+                        <form onSubmit={handleSubmit}>
+                            <label>
+                                What is the capital of this country?
+                                <input type="text" value={userAnswer} onChange={handleInputChange} />
+                            </label>
+                            <button type="submit">Submit</button>
+                        </form>
+                    </motion.div>
+
+                    <motion.div
+                        whileInView={{ opacity: [0, 1] }}
+                        transition={{ duration: 0.5, delayChildren: 0.5 }}
+                        className="flag-img"
+                    >
+                        <img src={urlFor(countries[currentQuestion].imgUrl)} alt={countries[currentQuestion].name} />
+                    </motion.div>
                 </div>
             ) : (
                 <div>Game Over</div>

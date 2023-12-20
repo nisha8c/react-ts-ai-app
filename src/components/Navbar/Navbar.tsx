@@ -39,9 +39,6 @@ const Navbar = () => {
                         <HiX onClick={() => setToggle(false)} />
                         <ul>
                             <li>
-                                <UserButton />
-                            </li>
-                            <li>
                                 <Button onClick={() => { setToggle(false); navigate('/page1'); }}>Go to Page 1</Button>
                             </li>
                             <li>
