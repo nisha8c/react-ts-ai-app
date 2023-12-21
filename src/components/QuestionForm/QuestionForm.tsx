@@ -10,11 +10,11 @@ interface QuestionFormProps {
     score: number;
 }
 const QuestionForm: React.FC<QuestionFormProps> = ({ name, handleSubmit, userAnswer, handleInputChange, isDisabled, score }) => {
-    const inputRef = useRef<HTMLInputElement>(null);
+    const inputRef = React.useRef<HTMLInputElement | null>(null);
 
     useEffect(() => {
         if (inputRef.current) {
-            inputRef.current.focus();
+            inputRef.current!.focus();
         }
     }, [name]); // refocus whenever the name changes
     return (

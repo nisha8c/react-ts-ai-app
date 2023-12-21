@@ -64,4 +64,29 @@
   }
 }
 
+.level-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 2vh; // Adjust as needed
+  margin-bottom: 5vh;
+
+  .button-container {
+    display: flex;
+    justify-content: space-between;
+    max-width: 300px; // Adjust as needed
+
+    .MuiButton-root {
+      margin: 0 10px;
+      transform-origin: center bottom;
+      cursor: pointer;
+
+      &:hover {
+        transform: translateY(-5px);
+        transition: transform 0.3s ease-in-out;
+      }
+    }
+  }
+}
+
 

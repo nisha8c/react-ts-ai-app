@@ -4,7 +4,7 @@ import { urlFor, client } from '../../client';
 import { motion } from 'framer-motion';
 import './LandingPage.scss'
 import {AlertColor} from "@mui/material";
-import { InputLabel } from '@mui/material';
+import { InputLabel, Button } from '@mui/material';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import {ICountry} from "../../types/types";
@@ -40,8 +40,6 @@ function LandingPage() {
 
     // Add a new piece of state to track the disabling state
     const [isDisabled, setIsDisabled] = useState(false);
-
-    const inputRef = React.useRef<HTMLInputElement>(null);
 
     const [openDialog, setOpenDialog] = useState(false);
 
@@ -82,22 +80,14 @@ function LandingPage() {
     }, [selectedLevel]);
 
 
-    // Focus on the TextField when the currentQuestion changes
-    useEffect(() => {
-        if (inputRef.current) {
-            inputRef.current.focus();
-        }
-    }, [currentQuestion]);
-
     useEffect(() => {
         if (currentQuestion >= countries.length) {
             handleOpenDialog();
         }
     }, [currentQuestion, countries.length]);
 
-
     // Function to handle user input
-    const handleInputChange = (event: any) => {
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setUserAnswer(event.target.value);
     };
 
@@ -110,35 +100,28 @@ function LandingPage() {
     };
 
     // Function to handle form submission
-    const handleSubmit = (event: any) => {
+    const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
-
-        // Disable the TextField and Submit button
         setIsDisabled(true);
 
         if (userAnswer.toLowerCase() === countries[currentQuestion].capital.toLowerCase()) {
             setMessage('Correct!');
             setSeverity('success');
-            setScore(score + 1); // Increment score when answer is correct
-            setCorrectAnswer(''); // Clear correct answer when the answer is correct
-            // Below lines were causing the game to not show next question if answer is wrong
-            // setCurrentQuestion(currentQuestion + 1);
-            // setUserAnswer('');
+            setScore(prevScore => prevScore + 1);
+            setCorrectAnswer('');
         } else {
             setMessage(`Sorry, that is not correct. The correct answer is ${countries[currentQuestion].capital}.`);
             setSeverity('error');
-            setCorrectAnswer(countries[currentQuestion].capital); // Set the correct answer
+            setCorrectAnswer(countries[currentQuestion].capital);
         }
 
         setUserAnswer('');
         setOpen(true);
 
-        // Delay before displaying the next question (adjust the delay time as needed)
         setTimeout(() => {
-            setCurrentQuestion(currentQuestion + 1);
-            setIsDisabled(false); // Enable the TextField and Submit button
-        }, 3000); // 2000 milliseconds (2 seconds) delay
-
+            setCurrentQuestion(prevQuestion => prevQuestion + 1);
+            setIsDisabled(false);
+        }, 3000);
     };
 
     // If the data hasn't loaded yet, display a loading message
@@ -146,11 +129,35 @@ function LandingPage() {
 
     return (
         <div className={"landing-page"}>
-            <div className="level-buttons">
-                <button onClick={() => handleLevelClick('Easy')}>Easy</button>
-                <button onClick={() => handleLevelClick('Medium')}>Medium</button>
-                <button onClick={() => handleLevelClick('Difficult')}>Difficult</button>
-            </div>
+            <motion.div
+                variants={scaleVariants}
+                whileInView={scaleVariants.whileInView}
+                className='level-buttons'
+            >
+                <div className="button-container">
+                    <Button
+                        onClick={() => handleLevelClick('Easy')}
+                        variant="outlined"
+                        size={'large'}
+                    >
+                        Easy
+                    </Button>
+                    <Button
+                        onClick={() => handleLevelClick('Medium')}
+                        variant="outlined"
+                        size={'large'}
+                    >
+                        Medium
+                    </Button>
+                    <Button
+                        onClick={() => handleLevelClick('Difficult')}
+                        variant="outlined"
+                        size={'large'}
+                    >
+                        Difficult
+                    </Button>
+                </div>
+            </motion.div>
 
             {levelClicked && currentQuestion < countries.length ? (
                 <motion.div
