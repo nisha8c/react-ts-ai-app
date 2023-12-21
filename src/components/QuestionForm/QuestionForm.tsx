@@ -1,6 +1,9 @@
 import React, {ChangeEvent, FormEvent, useEffect} from 'react';
-import { InputLabel, TextField, Button } from '@mui/material';
+import { InputLabel, TextField, Button, IconButton } from '@mui/material';
 import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognition";
+import VolumeUpIcon from '@mui/icons-material/VolumeUp';
+import StopIcon from '@mui/icons-material/Stop';
+import './QuestionForm.scss'
 interface QuestionFormProps {
     name: string;
     handleSubmit: (event: FormEvent) => void;
@@ -62,24 +65,37 @@ const QuestionForm: React.FC<QuestionFormProps> = ({name, handleSubmit, userAnsw
             />
 
             {browserSupportsSpeechRecognition && (
-                <>
-                    <Button type="button" variant="outlined" size={'large'} onClick={handleVoiceButtonClick}>
-                        Start Voice Input
-                    </Button>
+                <div className="button-container">
+                    <IconButton
+                        type="button"
+                        onClick={handleVoiceButtonClick}
+                        disabled={isDisabled}
+                        aria-label="Start Voice Input"
+                        style={{ color: 'blue' }}  // Adjust the color value as needed
+                    >
+                        <VolumeUpIcon />
+                    </IconButton>
 
                     {listening && (
-                        <Button type="button" variant="outlined" size={'large'} onClick={handleVoiceInputStop}>
-                            Stop Voice Input
-                        </Button>
+                        <IconButton
+                            type="button"
+                            onClick={handleVoiceInputStop}
+                            disabled={isDisabled}
+                            aria-label="Stop Voice Input"
+                            style={{ color: 'red' }}  // Adjust the color value as needed
+                        >
+                            <StopIcon />
+                        </IconButton>
                     )}
-                </>
+                </div>
             )}
 
             <Button type="submit" variant="outlined" size={'large'} disabled={isDisabled}>
                 Submit
             </Button>
 
-            <InputLabel>Score: {score}</InputLabel>
+            <InputLabel className="score-label">Score: {score}</InputLabel>
+
         </form>
     );
 };
