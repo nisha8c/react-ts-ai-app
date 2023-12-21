@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from "react";
-import {useNavigate} from "react-router-dom";
 import AppWrap from "../../wrapper/AppWrap";
 import { urlFor, client } from '../../client';
 import { motion } from 'framer-motion';
@@ -9,16 +8,10 @@ import { InputLabel } from '@mui/material';
 import Button from "@mui/material/Button";
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
-
-interface ICountry {
-    name: string;
-    capital: string;
-    imgUrl: any
-}
+import {ICountry} from "../../types/types";
 
 
 function LandingPage() {
-    const navigate = useNavigate();
     const [countries, setCountries] = useState<ICountry[]>([]);
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [userAnswer, setUserAnswer] = useState('');
@@ -26,6 +19,12 @@ function LandingPage() {
     const [open, setOpen] = useState(false);
     const [message, setMessage] = useState('');
     const [severity, setSeverity] = useState('success');
+
+    // Add a new piece of state for the score
+    const [score, setScore] = useState(0);
+
+    // state for the correct answer
+    const [correctAnswer, setCorrectAnswer] = useState<string>('');
 
     // Fetch the data from Sanity
     useEffect(() => {
@@ -59,12 +58,20 @@ function LandingPage() {
         if (userAnswer.toLowerCase() === countries[currentQuestion].capital.toLowerCase()) {
             setMessage('Correct!');
             setSeverity('success');
-            setCurrentQuestion(currentQuestion + 1);
-            setUserAnswer('');
+            setScore(score + 1); // Increment score when answer is correct
+            setCorrectAnswer(''); // Clear correct answer when the answer is correct
+            // Below lines were causing the game to not show next question if answer is wrong
+            // setCurrentQuestion(currentQuestion + 1);
+            // setUserAnswer('');
         } else {
-            setMessage('Sorry, that is not correct.');
+            setMessage(`Sorry, that is not correct. The correct answer is ${countries[currentQuestion].capital}.`);
             setSeverity('error');
+            setCorrectAnswer(countries[currentQuestion].capital); // Set the correct answer
         }
+
+        setCurrentQuestion(currentQuestion + 1); // Always increment currentQuestion
+        setUserAnswer('');
+        setOpen(true);
 
         setOpen(true);
 
@@ -76,8 +83,7 @@ function LandingPage() {
     return (
         <div className={"landing-page"}>
             {currentQuestion < countries.length ? (
-                <div>
-
+                <motion.div>
 
                     <motion.div
                         whileInView={{ opacity: [0, 1] }}
@@ -88,8 +94,8 @@ function LandingPage() {
                         <form onSubmit={handleSubmit} className={'form'}>
                             <InputLabel>
                                 What is the capital of this country?
-
                             </InputLabel>
+
                             <TextField id="outlined-basic"
                                        label="Enter Your Answer Here..."
                                        variant="outlined"
@@ -97,7 +103,9 @@ function LandingPage() {
                                        type={"text"}
                                        onChange={handleInputChange}
                             />
+
                             <Button type="submit" variant="outlined" size={'large'}>Submit</Button>
+                            <InputLabel>Score: {score}</InputLabel>
                         </form>
                     </motion.div>
 
@@ -108,12 +116,12 @@ function LandingPage() {
                     >
                         <img src={urlFor(countries[currentQuestion].imgUrl)} alt={countries[currentQuestion].name} />
                     </motion.div>
-                </div>
+                </motion.div>
             ) : (
-                <div>Game Over</div>
+                <InputLabel>Game Over. You scored {score} out of {countries.length}.</InputLabel>
             )}
 
-            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+            <Snackbar open={open} autoHideDuration={5000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity={severity as AlertColor} sx={{ width: '100%' }}>
                     {message}
                 </Alert>
