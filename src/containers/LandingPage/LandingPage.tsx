@@ -45,6 +45,17 @@ function LandingPage() {
 
     const [openDialog, setOpenDialog] = useState(false);
 
+    const [selectedLevel, setSelectedLevel] = useState<string | null>(null);
+    const [levelClicked, setLevelClicked] = useState(false);
+
+
+    const handleLevelClick = (level: string) => {
+        setSelectedLevel(level);
+        setCurrentQuestion(0); // Reset current question when changing levels
+        setScore(0); // Reset score when changing levels
+        setLevelClicked(true);
+    };
+
     const handleOpenDialog = () => {
         setOpenDialog(true);
     };
@@ -53,18 +64,23 @@ function LandingPage() {
         setOpenDialog(false);
     };
 
-    // Fetch the data from Sanity
+    // Fetch the data from Sanity with level filtering
     useEffect(() => {
+        let query = '*[_type == "countries"]';
+
+        if (selectedLevel) {
+            query += `[level == "${selectedLevel}"]`;
+        }
+
         client
-            .fetch('*[_type == "countries"]')
+            .fetch(query)
             .then((data) => {
-                console.log("DATATATAA", data)
                 setCountries(data);
-                console.log("COUNTRIES: ", countries)
             })
             .catch(console.error);
 
-    }, []);
+    }, [selectedLevel]);
+
 
     // Focus on the TextField when the currentQuestion changes
     useEffect(() => {
@@ -130,13 +146,18 @@ function LandingPage() {
 
     return (
         <div className={"landing-page"}>
-            {currentQuestion < countries.length ? (
+            <div className="level-buttons">
+                <button onClick={() => handleLevelClick('Easy')}>Easy</button>
+                <button onClick={() => handleLevelClick('Medium')}>Medium</button>
+                <button onClick={() => handleLevelClick('Difficult')}>Difficult</button>
+            </div>
+
+            {levelClicked && currentQuestion < countries.length ? (
                 <motion.div
                     variants={scaleVariants}
                     whileInView={scaleVariants.whileInView}
                     className="app__header-circles"
                 >
-
                     <motion.div
                         whileInView={{ opacity: [0, 1] }}
                         transition={{ duration: 0.5, delayChildren: 0.5 }}
@@ -161,7 +182,9 @@ function LandingPage() {
                         <img src={urlFor(countries[currentQuestion].imgUrl)} alt={countries[currentQuestion].name} />
                     </motion.div>
                 </motion.div>
-            ) : (
+            ) : null}
+
+            {currentQuestion >= countries.length && (
                 <SimpleDialog
                     open={openDialog}
                     onClose={handleCloseDialog}

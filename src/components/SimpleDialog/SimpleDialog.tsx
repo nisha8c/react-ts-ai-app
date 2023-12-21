@@ -1,4 +1,4 @@
-import React, { useState, forwardRef } from 'react';
+import React, { forwardRef } from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -6,14 +6,9 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide, { SlideProps } from '@mui/material/Slide';
-import { TransitionProps } from '@mui/material/transitions';
+//import { TransitionProps } from '@mui/material/transitions';
 
-interface SimpleDialogProps {
-    open: boolean;
-    onClose: () => void;
-    text: string,
-    titleText: string
-}
+import {SimpleDialogProps} from "../../types/types";
 
 const Transition = forwardRef<unknown, SlideProps>(function Transition(
     props,
