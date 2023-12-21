@@ -10,6 +10,8 @@ import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import {ICountry} from "../../types/types";
 
+import SimpleDialog from "../../components/SimpleDialog/SimpleDialog";
+
 const scaleVariants = {
     whileInView: {
         scale: [0, 1],
@@ -40,6 +42,16 @@ function LandingPage() {
     const [isDisabled, setIsDisabled] = useState(false);
 
     const inputRef = React.useRef<HTMLInputElement>(null);
+
+    const [openDialog, setOpenDialog] = useState(false);
+
+    const handleOpenDialog = () => {
+        setOpenDialog(true);
+    };
+
+    const handleCloseDialog = () => {
+        setOpenDialog(false);
+    };
 
     // Fetch the data from Sanity
     useEffect(() => {
@@ -148,6 +160,14 @@ function LandingPage() {
                             >
                                 Submit
                             </Button>
+
+                            <div>
+                                <Button variant="outlined" onClick={handleOpenDialog}>
+                                    Open Simple Dialog
+                                </Button>
+                                <SimpleDialog open={openDialog} onClose={handleCloseDialog} />
+                            </div>
+
                             <InputLabel>Score: {score}</InputLabel>
                         </form>
                     </motion.div>
