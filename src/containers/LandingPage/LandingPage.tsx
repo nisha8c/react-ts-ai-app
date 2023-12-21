@@ -10,6 +10,16 @@ import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import {ICountry} from "../../types/types";
 
+const scaleVariants = {
+    whileInView: {
+        scale: [0, 1],
+        opacity: [0, 1],
+        transition: {
+            duration: 1,
+            ease: 'easeInOut',
+        },
+    },
+};
 
 function LandingPage() {
     const [countries, setCountries] = useState<ICountry[]>([]);
@@ -29,6 +39,8 @@ function LandingPage() {
     // Add a new piece of state to track the disabling state
     const [isDisabled, setIsDisabled] = useState(false);
 
+    const inputRef = React.useRef<HTMLInputElement>(null);
+
     // Fetch the data from Sanity
     useEffect(() => {
         client
@@ -39,7 +51,15 @@ function LandingPage() {
                 console.log("COUNTRIES: ", countries)
             })
             .catch(console.error);
+
     }, []);
+
+    // Focus on the TextField when the currentQuestion changes
+    useEffect(() => {
+        if (inputRef.current) {
+            inputRef.current.focus();
+        }
+    }, [currentQuestion]);
 
     // Function to handle user input
     const handleInputChange = (event: any) => {
@@ -92,7 +112,11 @@ function LandingPage() {
     return (
         <div className={"landing-page"}>
             {currentQuestion < countries.length ? (
-                <motion.div>
+                <motion.div
+                    variants={scaleVariants}
+                    whileInView={scaleVariants.whileInView}
+                    className="app__header-circles"
+                >
 
                     <motion.div
                         whileInView={{ opacity: [0, 1] }}
@@ -107,11 +131,13 @@ function LandingPage() {
 
                             <TextField id="outlined-basic"
                                        label="Enter Your Answer Here..."
+                                       autoFocus={true}
                                        variant="outlined"
                                        value={userAnswer}
                                        type={"text"}
                                        onChange={handleInputChange}
                                        disabled={isDisabled} // Disable the TextField based on the state
+                                       inputRef={inputRef}
                             />
 
                             <Button
