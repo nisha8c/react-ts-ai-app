@@ -11,6 +11,8 @@ import { TransitionProps } from '@mui/material/transitions';
 interface SimpleDialogProps {
     open: boolean;
     onClose: () => void;
+    text: string,
+    titleText: string
 }
 
 const Transition = forwardRef<unknown, SlideProps>(function Transition(
@@ -20,7 +22,7 @@ const Transition = forwardRef<unknown, SlideProps>(function Transition(
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const SimpleDialog: React.FC<SimpleDialogProps> = ({ open, onClose }) => {
+const SimpleDialog: React.FC<SimpleDialogProps> = ({ open, onClose, text, titleText }) => {
     const handleClose = () => {
         onClose();
     };
@@ -33,16 +35,15 @@ const SimpleDialog: React.FC<SimpleDialogProps> = ({ open, onClose }) => {
             onClose={handleClose}
             aria-describedby="simple-dialog-description"
         >
-            <DialogTitle>{"Use Google's location service?"}</DialogTitle>
+            <DialogTitle>{titleText}</DialogTitle>
             <DialogContent>
                 <DialogContentText id="simple-dialog-description">
-                    Let Google help apps determine location. This means sending anonymous
-                    location data to Google, even when no apps are running.
+                    {text}
                 </DialogContentText>
             </DialogContent>
             <DialogActions>
-                <Button onClick={handleClose}>Disagree</Button>
-                <Button onClick={handleClose}>Agree</Button>
+                <Button onClick={handleClose} variant="contained">OK</Button>
+                <Button onClick={handleClose} variant="outlined">Start Again</Button>
             </DialogActions>
         </Dialog>
     );

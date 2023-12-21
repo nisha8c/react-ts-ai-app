@@ -9,7 +9,7 @@ import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import {ICountry} from "../../types/types";
 
-// import SimpleDialog from "../../components/SimpleDialog/SimpleDialog";
+import SimpleDialog from "../../components/SimpleDialog/SimpleDialog";
 import QuestionForm from "../../components/QuestionForm/QuestionForm";
 
 const scaleVariants = {
@@ -43,6 +43,15 @@ function LandingPage() {
 
     const inputRef = React.useRef<HTMLInputElement>(null);
 
+    const [openDialog, setOpenDialog] = useState(false);
+
+    const handleOpenDialog = () => {
+        setOpenDialog(true);
+    };
+
+    const handleCloseDialog = () => {
+        setOpenDialog(false);
+    };
 
     // Fetch the data from Sanity
     useEffect(() => {
@@ -63,6 +72,13 @@ function LandingPage() {
             inputRef.current.focus();
         }
     }, [currentQuestion]);
+
+    useEffect(() => {
+        if (currentQuestion >= countries.length) {
+            handleOpenDialog();
+        }
+    }, [currentQuestion, countries.length]);
+
 
     // Function to handle user input
     const handleInputChange = (event: any) => {
@@ -146,7 +162,12 @@ function LandingPage() {
                     </motion.div>
                 </motion.div>
             ) : (
-                <InputLabel>Game Over. You scored {score} out of {countries.length}.</InputLabel>
+                <SimpleDialog
+                    open={openDialog}
+                    onClose={handleCloseDialog}
+                    text={`You scored ${score} out of ${countries.length}.`}
+                    titleText={'Game Over!'}
+                />
             )}
 
             <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
