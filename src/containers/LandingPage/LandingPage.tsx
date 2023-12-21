@@ -26,6 +26,9 @@ function LandingPage() {
     // state for the correct answer
     const [correctAnswer, setCorrectAnswer] = useState<string>('');
 
+    // Add a new piece of state to track the disabling state
+    const [isDisabled, setIsDisabled] = useState(false);
+
     // Fetch the data from Sanity
     useEffect(() => {
         client
@@ -55,6 +58,9 @@ function LandingPage() {
     const handleSubmit = (event: any) => {
         event.preventDefault();
 
+        // Disable the TextField and Submit button
+        setIsDisabled(true);
+
         if (userAnswer.toLowerCase() === countries[currentQuestion].capital.toLowerCase()) {
             setMessage('Correct!');
             setSeverity('success');
@@ -69,16 +75,19 @@ function LandingPage() {
             setCorrectAnswer(countries[currentQuestion].capital); // Set the correct answer
         }
 
-        setCurrentQuestion(currentQuestion + 1); // Always increment currentQuestion
         setUserAnswer('');
         setOpen(true);
 
-        setOpen(true);
+        // Delay before displaying the next question (adjust the delay time as needed)
+        setTimeout(() => {
+            setCurrentQuestion(currentQuestion + 1);
+            setIsDisabled(false); // Enable the TextField and Submit button
+        }, 3000); // 2000 milliseconds (2 seconds) delay
 
     };
 
     // If the data hasn't loaded yet, display a loading message
-    if (!countries.length) return <div>Loading...</div>;
+    if (!countries.length) return <InputLabel>Loading...</InputLabel>;
 
     return (
         <div className={"landing-page"}>
@@ -102,9 +111,17 @@ function LandingPage() {
                                        value={userAnswer}
                                        type={"text"}
                                        onChange={handleInputChange}
+                                       disabled={isDisabled} // Disable the TextField based on the state
                             />
 
-                            <Button type="submit" variant="outlined" size={'large'}>Submit</Button>
+                            <Button
+                                type="submit"
+                                variant="outlined"
+                                size={'large'}
+                                disabled={isDisabled}
+                            >
+                                Submit
+                            </Button>
                             <InputLabel>Score: {score}</InputLabel>
                         </form>
                     </motion.div>
@@ -121,7 +138,7 @@ function LandingPage() {
                 <InputLabel>Game Over. You scored {score} out of {countries.length}.</InputLabel>
             )}
 
-            <Snackbar open={open} autoHideDuration={5000} onClose={handleClose}>
+            <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity={severity as AlertColor} sx={{ width: '100%' }}>
                     {message}
                 </Alert>
