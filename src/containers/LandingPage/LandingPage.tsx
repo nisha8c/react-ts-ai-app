@@ -163,7 +163,7 @@ function LandingPage() {
                 <motion.div
                     variants={scaleVariants}
                     whileInView={scaleVariants.whileInView}
-                    className="app__header-circles"
+                    className="app__header-form-and-flag"
                 >
                     <motion.div
                         whileInView={{ opacity: [0, 1] }}

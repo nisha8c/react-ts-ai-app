@@ -1,8 +1,9 @@
 .landing-page {
-
+  container-type: inline-size;
   width: 100%;
   height: 100%;
   flex-direction: row;
+
 
   padding: 6rem 2rem 0rem;
 
@@ -18,6 +19,7 @@
     padding: 6rem 1rem 2rem;
   }
 }
+
 
 .flag-img {
   flex: 1;
@@ -43,7 +45,7 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  align-items: flex-start;
+  align-items: center;
   height: 100%;
 
   margin: 0 2rem;
@@ -58,7 +60,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 2vh; // Adjust as needed
+  margin-top: -80px;
   margin-bottom: 5vh;
 
   .button-container {
@@ -78,5 +80,15 @@
     }
   }
 }
+
+.app__header-form-and-flag {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+}
+
 
 
