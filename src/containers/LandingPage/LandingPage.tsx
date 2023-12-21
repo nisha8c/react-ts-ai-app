@@ -3,14 +3,14 @@ import AppWrap from "../../wrapper/AppWrap";
 import { urlFor, client } from '../../client';
 import { motion } from 'framer-motion';
 import './LandingPage.scss'
-import {AlertColor, TextField} from "@mui/material";
+import {AlertColor} from "@mui/material";
 import { InputLabel } from '@mui/material';
-import Button from "@mui/material/Button";
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import {ICountry} from "../../types/types";
 
-import SimpleDialog from "../../components/SimpleDialog/SimpleDialog";
+// import SimpleDialog from "../../components/SimpleDialog/SimpleDialog";
+import QuestionForm from "../../components/QuestionForm/QuestionForm";
 
 const scaleVariants = {
     whileInView: {
@@ -43,15 +43,6 @@ function LandingPage() {
 
     const inputRef = React.useRef<HTMLInputElement>(null);
 
-    const [openDialog, setOpenDialog] = useState(false);
-
-    const handleOpenDialog = () => {
-        setOpenDialog(true);
-    };
-
-    const handleCloseDialog = () => {
-        setOpenDialog(false);
-    };
 
     // Fetch the data from Sanity
     useEffect(() => {
@@ -136,40 +127,14 @@ function LandingPage() {
                         className="flag-form"
                     >
                         <h1>{countries[currentQuestion].name}</h1>
-                        <form onSubmit={handleSubmit} className={'form'}>
-                            <InputLabel>
-                                What is the capital of this country?
-                            </InputLabel>
-
-                            <TextField id="outlined-basic"
-                                       label="Enter Your Answer Here..."
-                                       autoFocus={true}
-                                       variant="outlined"
-                                       value={userAnswer}
-                                       type={"text"}
-                                       onChange={handleInputChange}
-                                       disabled={isDisabled} // Disable the TextField based on the state
-                                       inputRef={inputRef}
-                            />
-
-                            <Button
-                                type="submit"
-                                variant="outlined"
-                                size={'large'}
-                                disabled={isDisabled}
-                            >
-                                Submit
-                            </Button>
-
-                            <div>
-                                <Button variant="outlined" onClick={handleOpenDialog}>
-                                    Open Simple Dialog
-                                </Button>
-                                <SimpleDialog open={openDialog} onClose={handleCloseDialog} />
-                            </div>
-
-                            <InputLabel>Score: {score}</InputLabel>
-                        </form>
+                        <QuestionForm
+                            name={countries[currentQuestion].name}
+                            handleSubmit={handleSubmit}
+                            userAnswer={userAnswer}
+                            handleInputChange={handleInputChange}
+                            isDisabled={isDisabled}
+                            score={score}
+                        />
                     </motion.div>
 
                     <motion.div
