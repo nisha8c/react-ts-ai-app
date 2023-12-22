@@ -13,6 +13,11 @@ const reducer = (state: GameState = initialState, action: any) => {
                 ...state,
                 gameHistory: [...state.gameHistory, action.payload],
             };
+        case 'CLEAR_GAME_HISTORY':
+            return {
+                ...state,
+                gameHistory: [],
+            };
         default:
             return state;
     }
