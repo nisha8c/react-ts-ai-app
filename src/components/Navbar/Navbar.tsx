@@ -20,7 +20,7 @@ const Navbar = () => {
             <ul className="app__navbar-links">
                 <li className="app__flex p-text">
                     <div />
-                    <Button onClick={() => navigate('/page1')}>Go to Page 1</Button>
+                    <Button onClick={() => navigate('/gameHistory')}>Game History</Button>
                 </li>
                 <li className="app__flex p-text">
                     <div />
@@ -39,7 +39,7 @@ const Navbar = () => {
                         <HiX onClick={() => setToggle(false)} />
                         <ul>
                             <li>
-                                <Button onClick={() => { setToggle(false); navigate('/page1'); }}>Go to Page 1</Button>
+                                <Button onClick={() => { setToggle(false); navigate('/gameHistory'); }}>Game History</Button>
                             </li>
                             <li>
                                 <Button onClick={() => { setToggle(false); navigate('/page2'); }}>Go to Page 2</Button>

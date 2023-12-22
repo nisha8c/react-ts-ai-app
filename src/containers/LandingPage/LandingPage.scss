@@ -31,13 +31,10 @@
   position: relative;
 
   img {
-    width: 400px;
-    height: 400px;
+    width: 300px;
+    height: 350px;
   }
 
-  @media screen and (max-width: 1200px) {
-    margin: 2rem 0;
-  }
 }
 
 .flag-form {
@@ -60,7 +57,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: -80px;
+  margin-top: -120px;
   margin-bottom: 5vh;
 
   .button-container {

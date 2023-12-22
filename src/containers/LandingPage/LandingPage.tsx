@@ -7,8 +7,10 @@ import {AlertColor} from "@mui/material";
 import { InputLabel, Button } from '@mui/material';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
-import {ICountry} from "../../types/types";
+import { useDispatch } from 'react-redux';
 
+import { setGameHistory } from "../../redux/actions";
+import {ICountry} from "../../types/types";
 import SimpleDialog from "../../components/SimpleDialog/SimpleDialog";
 import QuestionForm from "../../components/QuestionForm/QuestionForm";
 
@@ -24,6 +26,8 @@ const scaleVariants = {
 };
 
 function LandingPage() {
+    const dispatch = useDispatch();
+
     const [countries, setCountries] = useState<ICountry[]>([]);
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [userAnswer, setUserAnswer] = useState('');
@@ -56,6 +60,13 @@ function LandingPage() {
 
     const handleOpenDialog = () => {
         setOpenDialog(true);
+
+        // Dispatch game history to Redux store
+        dispatch(setGameHistory({
+            level: selectedLevel,
+            score,
+            timestamp: new Date().toLocaleString(),
+        }));
     };
 
     const handleCloseDialog = () => {
