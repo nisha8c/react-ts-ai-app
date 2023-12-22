@@ -1,5 +1,38 @@
+.history-page {
+
+  padding: 6rem 2rem 0rem;
+  justify-content: center;
+
+  @media screen and (min-width: 2000px) {
+    padding-top: 8rem;
+  }
+
+  @media screen and (max-width: 1200px) {
+    flex-direction: column;
+  }
+
+  @media screen and (max-width: 450px) {
+    padding: 6rem 1rem 2rem;
+  }
+
+  .history-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .history-header-buttons {
+      margin-top: 15px;
+      margin-bottom: 10px;
+      display: flex;
+      flex-direction: row;
+      gap: 10px;
+    }
+  }
+}
+
 .cards-panel {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  justify-content: center;
 }
