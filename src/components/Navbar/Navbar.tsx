@@ -9,7 +9,8 @@ import {Link, useNavigate} from "react-router-dom";
 import {NavItemProps} from "../../types/types";
 
 const NavItem = ({ label, path, onClick }: NavItemProps) => (
-    <li>
+    <li className="app__flex p-text">
+        <div />
         <Button onClick={onClick}>{label}</Button>
     </li>
 );

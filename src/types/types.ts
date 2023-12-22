@@ -14,6 +14,7 @@ export interface SimpleDialogProps {
 
 export interface GameState {
     gameHistory: any[]; // You can replace 'any' with a more specific type if needed
+    isPaused: boolean;
 }
 
 export interface NavItemProps {

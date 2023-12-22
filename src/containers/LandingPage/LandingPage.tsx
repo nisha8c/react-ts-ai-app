@@ -7,8 +7,9 @@ import {AlertColor} from "@mui/material";
 import { InputLabel, Button } from '@mui/material';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
+import {pauseGame, resumeGame} from "../../redux/actions";
 import { setGameHistory } from "../../redux/actions";
 import {ICountry} from "../../types/types";
 import SimpleDialog from "../../components/SimpleDialog/SimpleDialog";
@@ -27,6 +28,7 @@ const scaleVariants = {
 
 function LandingPage() {
     const dispatch = useDispatch();
+    const isPaused = useSelector((state: any) => state.historyReducer.isPaused);
 
     const [countries, setCountries] = useState<ICountry[]>([]);
     const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -182,12 +184,17 @@ function LandingPage() {
                         className="flag-form"
                     >
                         <h1>{countries[currentQuestion].name}</h1>
+                        {isPaused ? (
+                            <Button onClick={() => dispatch(resumeGame())}>Resume</Button>
+                        ) : (
+                            <Button onClick={() => dispatch(pauseGame())}>Pause</Button>
+                        )}
                         <QuestionForm
                             name={countries[currentQuestion].name}
                             handleSubmit={handleSubmit}
                             userAnswer={userAnswer}
                             handleInputChange={handleInputChange}
-                            isDisabled={isDisabled}
+                            isDisabled={isDisabled || isPaused}
                             score={score}
                         />
                     </motion.div>
