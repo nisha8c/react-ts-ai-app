@@ -1,6 +1,4 @@
-interface GameState {
-    gameHistory: any[]; // You can replace 'any' with a more specific type if needed
-}
+import {GameState} from "../types/types";
 
 const initialState: GameState = {
     gameHistory: [],

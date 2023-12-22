@@ -11,3 +11,7 @@ export interface SimpleDialogProps {
     text: string,
     titleText: string
 }
+
+export interface GameState {
+    gameHistory: any[]; // You can replace 'any' with a more specific type if needed
+}
