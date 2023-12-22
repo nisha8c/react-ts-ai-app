@@ -51,13 +51,14 @@ function LandingPage() {
 
     const [selectedLevel, setSelectedLevel] = useState<string | null>(null);
     const [levelClicked, setLevelClicked] = useState(false);
-
+    const [buttonSelected, setButtonSelected] = useState(false);
 
     const handleLevelClick = (level: string) => {
         setSelectedLevel(level);
         setCurrentQuestion(0); // Reset current question when changing levels
         setScore(0); // Reset score when changing levels
         setLevelClicked(true);
+        setButtonSelected(true);
     };
 
     const handleOpenDialog = () => {
@@ -73,6 +74,7 @@ function LandingPage() {
 
     const handleCloseDialog = () => {
         setOpenDialog(false);
+        setButtonSelected(false);
     };
 
     // Fetch the data from Sanity with level filtering
@@ -152,6 +154,7 @@ function LandingPage() {
                         onClick={() => handleLevelClick('Easy')}
                         variant="outlined"
                         size={'large'}
+                        disabled={buttonSelected && selectedLevel !== 'Easy'}
                     >
                         Easy
                     </Button>
@@ -159,6 +162,7 @@ function LandingPage() {
                         onClick={() => handleLevelClick('Medium')}
                         variant="outlined"
                         size={'large'}
+                        disabled={buttonSelected && selectedLevel !== 'Medium'}
                     >
                         Medium
                     </Button>
@@ -166,6 +170,7 @@ function LandingPage() {
                         onClick={() => handleLevelClick('Difficult')}
                         variant="outlined"
                         size={'large'}
+                        disabled={buttonSelected && selectedLevel !== 'Difficult'}
                     >
                         Difficult
                     </Button>
@@ -182,7 +187,7 @@ function LandingPage() {
                         whileInView={{ opacity: [0, 1] }}
                         transition={{ duration: 0.5, delayChildren: 0.5 }}
                         className="flag-form"
-                    > *
+                    >
                         <h1>{countries[currentQuestion].name}</h1>
                         {/*
                         {isPaused ? (

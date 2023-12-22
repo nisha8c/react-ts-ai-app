@@ -28,7 +28,6 @@ const WeeklyChart = () => {
 
             // Check if there is a non-blank level in the gameHistory
             const nonBlankLevelData = gameHistory.filter((entry: any) => entry.level !== null);
-            console.log('nonBlankLevelData: ', nonBlankLevelData);
 
             if (nonBlankLevelData.length === 0) {
                 // No non-blank level found, destroy the chart and return
