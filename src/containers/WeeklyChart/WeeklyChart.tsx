@@ -6,6 +6,8 @@ import { Bar } from 'react-chartjs-2';
 
 import AppWrap from "../../wrapper/AppWrap";
 import { Chart, registerables } from 'chart.js';
+import './WeeklyChart.scss'
+
 Chart.register(...registerables);
 
 let myChart: Chart | null = null;
@@ -64,11 +66,12 @@ const WeeklyChart = () => {
 
     return (
         <div className={'chart-page'}>
-            <h2>Weekly Chart</h2>
-            <canvas ref={canvasRef} />
+            <div className={'chart-header'}>
+                <h2>Weekly Chart</h2>
+                <Link to="/protected"><Button variant={"outlined"} size={"large"}>Return Home</Button></Link>
+            </div>
 
-            <Link to="/protected"><Button variant={"outlined"} size={"large"}>Return Home</Button></Link>
-
+            <canvas ref={canvasRef} className={'chart-canvas'} />
         </div>
     );
 }

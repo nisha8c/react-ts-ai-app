@@ -17,12 +17,6 @@ export interface GameState {
     isPaused: boolean;
 }
 
-export interface NavItemProps {
-    label: string;
-    path: string;
-    onClick: () => void;
-}
-
 export interface CardProps {
     image?: string;
     title?: string;
