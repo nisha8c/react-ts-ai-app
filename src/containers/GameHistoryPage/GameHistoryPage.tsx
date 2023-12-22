@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 import AppWrap from "../../wrapper/AppWrap";
 import {Button} from "@mui/material";
 import {clearGameHistory} from "../../redux/actions";
-
+import CustomCard from "../../components/CustomCard/CustomCard";
+import './GameHistory.scss'
 const GameHistoryPage = () => {
     const dispatch = useDispatch();
     const gameHistory = useSelector((state: any) => state.historyReducer.gameHistory);
@@ -18,18 +19,19 @@ const GameHistoryPage = () => {
     return (
         <div className={'history-page'}>
             <h1>Game History</h1>
-            <ul>
+            <div className={'cards-panel'}>
                 {gameHistory.map((entry: any, index: number) => (
-                    // Check if the 'level' is not blank before rendering the <li> element
+                    // Check if the 'level' is not blank before rendering the card
                     entry.level && (
-                        <li key={index}>
-                            <p>Level: {entry.level}</p>
-                            <p>Score: {entry.score}</p>
-                            <p>Timestamp: {entry.timestamp}</p>
-                        </li>
+                        <CustomCard
+                            key={index}
+                            title={`Level: ${entry.level}`}
+                            description={`Score: ${entry.score}, Timestamp: ${entry.timestamp}`}
+                        />
                     )
                 ))}
-            </ul>
+            </div>
+
 
             <Button variant={"outlined"} size={"large"} onClick={handleClearHistory}>
                 Clear Game History

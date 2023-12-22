@@ -22,3 +22,9 @@ export interface NavItemProps {
     path: string;
     onClick: () => void;
 }
+
+export interface CardProps {
+    image?: string;
+    title?: string;
+    description?: string;
+}
