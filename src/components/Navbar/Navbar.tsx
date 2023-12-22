@@ -5,7 +5,7 @@ import Button from "@mui/material/Button";
 import { UserButton } from "@clerk/clerk-react";
 import { images } from '../../assets/index';
 import './Navbar.scss';
-import { useNavigate } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {NavItemProps} from "../../types/types";
 
 const NavItem = ({ label, path, onClick }: NavItemProps) => (
@@ -27,7 +27,9 @@ const Navbar = () => {
     return (
         <nav className="app__navbar">
             <div className="app__navbar-logo">
-                <img src={images.logo} alt="logo" />
+                <Link to="/protected">
+                    <img src={images.logo} alt="logo" />
+                </Link>
             </div>
 
             <ul className="app__navbar-links">

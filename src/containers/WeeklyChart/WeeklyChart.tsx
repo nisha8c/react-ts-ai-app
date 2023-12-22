@@ -66,9 +66,9 @@ const WeeklyChart = () => {
         <div className={'chart-page'}>
             <h2>Weekly Chart</h2>
             <canvas ref={canvasRef} />
-            <Button variant={"outlined"} size={"large"}>
-                <Link to="/protected">Go Back to Game Page</Link>
-            </Button>
+
+            <Link to="/protected"><Button variant={"outlined"} size={"large"}>Return Home</Button></Link>
+
         </div>
     );
 }
