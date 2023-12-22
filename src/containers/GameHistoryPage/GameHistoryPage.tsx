@@ -1,9 +1,11 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import AppWrap from "../../wrapper/AppWrap";
+import {Button} from "@mui/material";
 
 const GameHistoryPage = () => {
-    const gameHistory = useSelector((state: any) => state.gameHistory);
+    const gameHistory = useSelector((state: any) => state.historyReducer.gameHistory);
     console.log('gameHistory:: ', gameHistory);
 
     return (
@@ -18,6 +20,10 @@ const GameHistoryPage = () => {
                     </li>
                 ))}
             </ul>
+
+            <Button variant={"outlined"} size={"large"}>
+                <Link to="/protected">Go Back to Game Page</Link>
+            </Button>
         </div>
     );
 };
