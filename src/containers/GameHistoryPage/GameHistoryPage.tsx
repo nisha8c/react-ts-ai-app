@@ -18,7 +18,15 @@ const GameHistoryPage = () => {
 
     return (
         <div className={'history-page'}>
-            <h1>Game History</h1>
+            <div className={'history-header'}>
+                <h1>Game History</h1>
+                <div className={'history-header-buttons'}>
+                    <Button variant={"outlined"} size={"large"} onClick={handleClearHistory}>
+                        Clear Game History
+                    </Button>
+                    <Link to="/protected"><Button variant={"outlined"} size={"large"}>Return Home</Button></Link>
+                </div>
+            </div>
             <div className={'cards-panel'}>
                 {gameHistory.map((entry: any, index: number) => (
                     // Check if the 'level' is not blank before rendering the card
@@ -31,14 +39,6 @@ const GameHistoryPage = () => {
                     )
                 ))}
             </div>
-
-
-            <Button variant={"outlined"} size={"large"} onClick={handleClearHistory}>
-                Clear Game History
-            </Button>
-
-            <Link to="/protected"><Button variant={"outlined"} size={"large"}>Return Home</Button></Link>
-
         </div>
     );
 };
