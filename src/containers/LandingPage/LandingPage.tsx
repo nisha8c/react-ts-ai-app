@@ -9,7 +9,7 @@ import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import { useSelector, useDispatch } from 'react-redux';
 
-import {pauseGame, resumeGame} from "../../redux/actions";
+//import {pauseGame, resumeGame} from "../../redux/actions";
 import { setGameHistory } from "../../redux/actions";
 import {ICountry} from "../../types/types";
 import SimpleDialog from "../../components/SimpleDialog/SimpleDialog";
@@ -182,13 +182,15 @@ function LandingPage() {
                         whileInView={{ opacity: [0, 1] }}
                         transition={{ duration: 0.5, delayChildren: 0.5 }}
                         className="flag-form"
-                    >
+                    > *
                         <h1>{countries[currentQuestion].name}</h1>
+                        {/*
                         {isPaused ? (
                             <Button onClick={() => dispatch(resumeGame())}>Resume</Button>
                         ) : (
                             <Button onClick={() => dispatch(pauseGame())}>Pause</Button>
                         )}
+                         */}
                         <QuestionForm
                             name={countries[currentQuestion].name}
                             handleSubmit={handleSubmit}

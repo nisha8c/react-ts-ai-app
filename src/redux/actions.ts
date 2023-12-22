@@ -16,8 +16,3 @@ export const resumeGame = () => ({
     type: 'RESUME_GAME',
 });
 
-// New action to initialize game state from local storage
-export const initializeGameState = (state: GameState) => ({
-    type: 'INITIALIZE_GAME_STATE',
-    payload: state,
-});

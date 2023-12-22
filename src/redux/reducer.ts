@@ -27,11 +27,6 @@ const reducer = (state: GameState = initialState, action: any) => {
                 ...state,
                 isPaused: false,
             };
-        case 'INITIALIZE_GAME_STATE':
-            return {
-                ...state,
-                ...action.payload,
-            };
         default:
             return state;
     }
