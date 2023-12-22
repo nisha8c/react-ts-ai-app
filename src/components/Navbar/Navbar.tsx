@@ -24,7 +24,7 @@ const Navbar = () => {
                 </li>
                 <li className="app__flex p-text">
                     <div />
-                    <Button onClick={() => navigate('/page2')}>Go to Page 2</Button>
+                    <Button onClick={() => navigate('/chart')}>Weekly Chart</Button>
                 </li>
             </ul>
 
@@ -42,7 +42,7 @@ const Navbar = () => {
                                 <Button onClick={() => { setToggle(false); navigate('/gameHistory'); }}>Game History</Button>
                             </li>
                             <li>
-                                <Button onClick={() => { setToggle(false); navigate('/page2'); }}>Go to Page 2</Button>
+                                <Button onClick={() => { setToggle(false); navigate('/chart'); }}>Weekly Chart</Button>
                             </li>
                         </ul>
                     </motion.div>
