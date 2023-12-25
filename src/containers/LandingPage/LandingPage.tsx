@@ -68,7 +68,7 @@ function LandingPage() {
         dispatch(setGameHistory({
             level: selectedLevel,
             score,
-            timestamp: new Date().toLocaleString(),
+            timestamp: new Date().toISOString(),
         }));
     };
 

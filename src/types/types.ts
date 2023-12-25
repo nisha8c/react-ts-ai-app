@@ -22,3 +22,9 @@ export interface CardProps {
     title?: string;
     description?: string;
 }
+
+export interface GameEntry {
+    level: string | null;
+    score: number;
+    timestamp: string;
+}
