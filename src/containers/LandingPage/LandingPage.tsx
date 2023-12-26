@@ -53,12 +53,32 @@ function LandingPage() {
     const [levelClicked, setLevelClicked] = useState(false);
     const [buttonSelected, setButtonSelected] = useState(false);
 
+    // Initialize offsets from localStorage or set to default values
+    const [offsets, setOffsets] = useState(() => {
+        const savedOffsets = localStorage.getItem('offsets');
+        return savedOffsets ? JSON.parse(savedOffsets) : { Easy: 0, Medium: 0, Difficult: 0 };
+    });
+
     const handleLevelClick = (level: string) => {
         setSelectedLevel(level);
         setCurrentQuestion(0); // Reset current question when changing levels
         setScore(0); // Reset score when changing levels
         setLevelClicked(true);
         setButtonSelected(true);
+
+        // Increment the offset for the selected level
+        setOffsets((prevOffsets: { Easy: number; Medium: number; Difficult: number; }) => {
+            const newOffsets = {
+                ...prevOffsets,
+                [level]: prevOffsets[level as keyof typeof prevOffsets] + 10,
+            };
+
+            // Save the new offsets to localStorage
+            localStorage.setItem('offsets', JSON.stringify(newOffsets));
+
+            return newOffsets;
+        });
+
     };
 
     const handleOpenDialog = () => {
@@ -88,11 +108,32 @@ function LandingPage() {
         client
             .fetch(query)
             .then((data) => {
-                setCountries(data);
+                // Get the next 10 questions starting from the current offset
+                const start = offsets[selectedLevel as keyof typeof offsets];
+                const end = start + 10;
+                const slicedData = data.slice(start, end);
+
+                // If the offset exceeds the total number of questions, reset it to 0
+                if (slicedData.length < 10) {
+                    setOffsets((prevOffsets: { Easy: number; Medium: number; Difficult: number; }) => {
+                        const newOffsets = {
+                            ...prevOffsets,
+                            [selectedLevel as keyof typeof offsets]: 0,
+                        };
+
+                        // Save the new offsets to localStorage
+                        localStorage.setItem('offsets', JSON.stringify(newOffsets));
+
+                        return newOffsets;
+                    });
+                }
+
+                setCountries(slicedData);
             })
             .catch(console.error);
 
-    }, [selectedLevel]);
+    }, [selectedLevel, offsets]);
+
 
 
     useEffect(() => {
