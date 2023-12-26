@@ -188,7 +188,7 @@ function LandingPage() {
                         transition={{ duration: 0.5, delayChildren: 0.5 }}
                         className="flag-form"
                     >
-                        <h1>{countries[currentQuestion].name}</h1>
+                        <h1 className={'bold-text'}>{countries[currentQuestion].name}</h1>
                         {/*
                         {isPaused ? (
                             <Button onClick={() => dispatch(resumeGame())}>Resume</Button>

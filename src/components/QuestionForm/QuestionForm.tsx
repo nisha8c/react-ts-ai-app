@@ -50,7 +50,7 @@ const QuestionForm: React.FC<QuestionFormProps> = ({name, handleSubmit, userAnsw
 
     return (
         <form onSubmit={handleSubmit} className={'form'}>
-            <InputLabel>What is the capital of {name}?</InputLabel>
+            <InputLabel className={'p-text'}>What is the capital of {name}?</InputLabel>
 
             <TextField
                 id="outlined-basic"
