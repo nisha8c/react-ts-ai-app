@@ -52,8 +52,10 @@ const QuestionForm: React.FC<QuestionFormProps> = ({name, handleSubmit, userAnsw
         try {
             // Define the prompt for the OpenAI API
             const prompt = `Provide a hint for the capital of ${name}`;
+            console.log('prompt for Hint: ', prompt)
             const generatedHint = await complete(prompt);
             setHint(generatedHint);
+            console.log('Hint: ', hint);
         } catch (error) {
             console.error("Error generating hint:", error);
         }
@@ -62,8 +64,10 @@ const QuestionForm: React.FC<QuestionFormProps> = ({name, handleSubmit, userAnsw
     const handleInfoClick = async () => {
         try {
             const prompt = `Provide information about the country ${name}`;
+            console.log('prompt for Info: ', prompt)
             const generatedInfo = await complete(prompt);
             setInfo(generatedInfo);
+            console.log('Info: ', info);
         } catch (error) {
             console.error("Error generating info:", error);
         }

@@ -17,8 +17,7 @@ export default openai;
 export async function complete(prompt: string) {
     try {
         const response = await openai.completions.create({
-            model: "ada-code-search-text",
-                //"text-embedding-ada-002",
+            model: "text-davinci-003",
             prompt: prompt,
             // Add any additional parameters as needed
         });
