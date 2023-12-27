@@ -1,3 +1,16 @@
+
+<img width="438" alt="Screenshot 2023-12-27 at 17 18 50" src="https://github.com/nisha8c/react-ts-ai-app/assets/108927164/46d5f2c7-e6bd-4f11-92f1-539f5ef46af4">
+
+
+<img width="438" alt="Screenshot 2023-12-27 at 17 19 07" src="https://github.com/nisha8c/react-ts-ai-app/assets/108927164/36a93798-b738-4cd4-8f3e-2ae6bf537218">
+
+
+<img width="438" alt="Screenshot 2023-12-27 at 17 19 28" src="https://github.com/nisha8c/react-ts-ai-app/assets/108927164/88e7e144-752b-4256-b006-3daea58ae190">
+
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
