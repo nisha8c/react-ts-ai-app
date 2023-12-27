@@ -1,9 +1,12 @@
-import React, {ChangeEvent, FormEvent, useEffect} from 'react';
+import React, {ChangeEvent, FormEvent, useEffect, useState} from 'react';
 import { InputLabel, TextField, Button, IconButton } from '@mui/material';
 import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognition";
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
 import StopIcon from '@mui/icons-material/Stop';
-import './QuestionForm.scss'
+import {Lightbulb, Help} from "@mui/icons-material";
+import './QuestionForm.scss';
+import {complete} from "../../openai";
+
 interface QuestionFormProps {
     name: string;
     handleSubmit: (event: FormEvent) => void;
@@ -14,6 +17,10 @@ interface QuestionFormProps {
 }
 const QuestionForm: React.FC<QuestionFormProps> = ({name, handleSubmit, userAnswer, handleInputChange, isDisabled, score }) => {
     const inputRef = React.useRef<HTMLInputElement | null>(null);
+
+    // for the hint and info
+    const [hint, setHint] = useState('');
+    const [info, setInfo] = useState('');
 
     const {
         transcript,
@@ -40,6 +47,28 @@ const QuestionForm: React.FC<QuestionFormProps> = ({name, handleSubmit, userAnsw
             target: { value: transcript },
         } as React.ChangeEvent<HTMLInputElement>);
     };
+
+    const handleHintClick = async () => {
+        try {
+            // Define the prompt for the OpenAI API
+            const prompt = `Provide a hint for the capital of ${name}`;
+            const generatedHint = await complete(prompt);
+            setHint(generatedHint);
+        } catch (error) {
+            console.error("Error generating hint:", error);
+        }
+    };
+
+    const handleInfoClick = async () => {
+        try {
+            const prompt = `Provide information about the country ${name}`;
+            const generatedInfo = await complete(prompt);
+            setInfo(generatedInfo);
+        } catch (error) {
+            console.error("Error generating info:", error);
+        }
+    };
+
 
     useEffect(() => {
         handleInputChange({
@@ -93,6 +122,18 @@ const QuestionForm: React.FC<QuestionFormProps> = ({name, handleSubmit, userAnsw
             <Button type="submit" variant="outlined" size={'large'} disabled={isDisabled}>
                 Submit
             </Button>
+
+            <div>
+                <IconButton type="button" aria-label={'Help'} style={{ color: 'green' }} onClick={handleHintClick} disabled={isDisabled}>
+                    <Help />
+                </IconButton>
+                <IconButton type="button" aria-label={'Hint'} style={{ color: 'orange' }} onClick={handleInfoClick} disabled={isDisabled}>
+                    <Lightbulb />
+                </IconButton>
+            </div>
+            {/* Display the hint and info if they exist */}
+            {hint && <InputLabel>Hint: {hint}</InputLabel>}
+            {info && <InputLabel>Info: {info}</InputLabel>}
 
             <InputLabel className="score-label">Score: {score}</InputLabel>
 
