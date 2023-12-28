@@ -34,6 +34,9 @@ const QuestionForm: React.FC<QuestionFormProps> = ({name, handleSubmit, userAnsw
         if (inputRef.current) {
             inputRef.current!.focus();
         }
+        // Reset hint and info when name changes
+        setHint('');
+        setInfo('');
     }, [name]); // refocus whenever the name changes
 
     const handleVoiceButtonClick = () => {
@@ -66,7 +69,6 @@ const QuestionForm: React.FC<QuestionFormProps> = ({name, handleSubmit, userAnsw
             console.log('prompt for Info: ', prompt)
             const generatedInfo = await complete(prompt);
             setInfo(generatedInfo);
-            console.log('Info: ', info);
         } catch (error) {
             console.error("Error generating info:", error);
         }
@@ -135,8 +137,8 @@ const QuestionForm: React.FC<QuestionFormProps> = ({name, handleSubmit, userAnsw
                 </IconButton>
             </div>
             {/* Display the hint and info if they exist */}
-            {hint && <InputLabel>Hint: {hint}</InputLabel>}
-            {info && <InputLabel>Info: {info}</InputLabel>}
+            {hint && <p className={'p-text'}>Hint: {hint}</p>}
+            {info && <p className={'p-text'}>Info: {info}</p>}
 
             <InputLabel className="score-label">Score: {score}</InputLabel>
 
