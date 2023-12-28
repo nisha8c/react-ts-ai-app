@@ -4,3 +4,27 @@
   justify-content: center;
   align-items: center;
 }
+
+.app__app-logo {
+  flex: 1;
+  height: 100%;
+  width: 100%;
+  margin: auto;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+
+  img {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+    z-index: 1;
+  }
+
+  @media screen and (max-width: 1200px) {
+    margin: 2rem auto;
+  }
+}
+
