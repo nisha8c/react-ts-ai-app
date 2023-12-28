@@ -8,6 +8,11 @@ import { InputLabel, Button } from '@mui/material';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import { useSelector, useDispatch } from 'react-redux';
+import useSound from 'use-sound';
+
+import correctAnswerSound from '../../sounds/correct.mp3';
+import wrongAnswerSound from '../../sounds/wrong.mp3';
+
 
 //import {pauseGame, resumeGame} from "../../redux/actions";
 import { setGameHistory } from "../../redux/actions";
@@ -58,6 +63,10 @@ function LandingPage() {
         const savedOffsets = localStorage.getItem('offsets');
         return savedOffsets ? JSON.parse(savedOffsets) : { Easy: 0, Medium: 0, Difficult: 0 };
     });
+
+    const [playCorrect] = useSound(correctAnswerSound);
+    const [playWrong] = useSound(wrongAnswerSound);
+
 
     const handleLevelClick = (level: string) => {
         setSelectedLevel(level);
@@ -160,18 +169,23 @@ function LandingPage() {
         event.preventDefault();
         setIsDisabled(true);
 
-        if (userAnswer.toLowerCase() === countries[currentQuestion].capital.toLowerCase()) {
+        const isCorrect = userAnswer.toLowerCase() === countries[currentQuestion].capital.toLowerCase();
+
+        if (isCorrect) {
             setMessage('Correct!');
             setSeverity('success');
             setScore(prevScore => prevScore + 1);
             setCorrectAnswer('');
+            playCorrect(); // Play the correct sound here
         } else {
             setMessage(`Sorry, that is not correct. The correct answer is ${countries[currentQuestion].capital}.`);
             setSeverity('error');
             setCorrectAnswer(countries[currentQuestion].capital);
+            playWrong(); // Play the wrong sound here
         }
 
         setUserAnswer('');
+
         setOpen(true);
 
         setTimeout(() => {
