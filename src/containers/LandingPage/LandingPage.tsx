@@ -9,9 +9,12 @@ import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import { useSelector, useDispatch } from 'react-redux';
 import useSound from 'use-sound';
+import Confetti from 'react-confetti';
 
 import correctAnswerSound from '../../sounds/correct.mp3';
 import wrongAnswerSound from '../../sounds/wrong.mp3';
+import clapsSound from '../../sounds/claps.mp3';
+
 
 
 //import {pauseGame, resumeGame} from "../../redux/actions";
@@ -66,6 +69,7 @@ function LandingPage() {
 
     const [playCorrect] = useSound(correctAnswerSound);
     const [playWrong] = useSound(wrongAnswerSound);
+    const [playClaps] = useSound(clapsSound);
 
 
     const handleLevelClick = (level: string) => {
@@ -92,7 +96,7 @@ function LandingPage() {
 
     const handleOpenDialog = () => {
         setOpenDialog(true);
-
+        playClaps();
         // Dispatch game history to Redux store
         dispatch(setGameHistory({
             level: selectedLevel,
@@ -272,12 +276,15 @@ function LandingPage() {
             ) : null}
 
             {currentQuestion >= countries.length && (
-                <SimpleDialog
-                    open={openDialog}
-                    onClose={handleCloseDialog}
-                    text={`You scored ${score} out of ${countries.length}.`}
-                    titleText={'Game Over!'}
-                />
+                <>
+                    <Confetti />
+                    <SimpleDialog
+                        open={openDialog}
+                        onClose={handleCloseDialog}
+                        text={`You scored ${score} out of ${countries.length}.`}
+                        titleText={'Game Over!'}
+                    />
+                </>
             )}
 
             <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>

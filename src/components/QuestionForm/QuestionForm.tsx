@@ -55,7 +55,6 @@ const QuestionForm: React.FC<QuestionFormProps> = ({name, handleSubmit, userAnsw
             console.log('prompt for Hint: ', prompt)
             const generatedHint = await complete(prompt);
             setHint(generatedHint);
-            console.log('Hint: ', hint);
         } catch (error) {
             console.error("Error generating hint:", error);
         }
