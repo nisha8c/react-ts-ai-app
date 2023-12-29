@@ -1,16 +1,16 @@
 // import {ArrowLeft, ArrowRight} from "@mui/icons-material";
 
-import React, {useEffect, useRef, useCallback, useState} from 'react';
+import React, { useEffect, useRef, useCallback, useState } from 'react';
 import { Link } from "react-router-dom";
-import {Button, IconButton} from "@mui/material";
+import { Button, IconButton } from "@mui/material";
 import { useSelector } from 'react-redux';
 import { Bar } from 'react-chartjs-2';
 import { getISOWeek, startOfWeek, endOfWeek, isWithinInterval, addWeeks, subWeeks } from 'date-fns';
-import {ArrowLeft, ArrowRight} from "@mui/icons-material";
+import { ArrowLeft, ArrowRight } from "@mui/icons-material";
 import AppWrap from "../../wrapper/AppWrap";
 import { Chart, registerables } from 'chart.js';
 import './WeeklyChart.scss';
-import {GameEntry} from "../../types/types";
+import { GameEntry } from "../../types/types";
 
 Chart.register(...registerables);
 
@@ -29,7 +29,7 @@ const WeeklyChart = () => {
         }
     }, []);
 
-    const calculateTotalScore = (level: string, day: number, weekStart: Date) => {
+    const calculateAverageScore = (level: string, day: number, weekStart: Date) => {
         const weekEnd = endOfWeek(weekStart, { weekStartsOn: 1 });
         const filteredEntries = validEntries
             .filter((entry: GameEntry) => {
@@ -38,7 +38,10 @@ const WeeklyChart = () => {
                 return entry.level === level && entryDay === Number(day) && isWithinInterval(timestamp, { start: weekStart, end: weekEnd });
             });
 
-        return filteredEntries.reduce((total: number, entry: GameEntry) => total + entry.score, 0);
+        const totalScore = filteredEntries.reduce((total: number, entry: GameEntry) => total + entry.score, 0);
+        const averageScore = filteredEntries.length > 0 ? totalScore / filteredEntries.length : 0;
+
+        return averageScore;
     };
 
     useEffect(() => {
@@ -65,21 +68,21 @@ const WeeklyChart = () => {
                         datasets: [
                             {
                                 label: 'Easy',
-                                data: [0, 1, 2, 3, 4, 5, 6].map(day => calculateTotalScore('Easy', day, currentWeekStart)),
+                                data: [0, 1, 2, 3, 4, 5, 6].map(day => calculateAverageScore('Easy', day, currentWeekStart)),
                                 backgroundColor: 'rgba(75,192,192,0.4)',
                                 borderColor: 'rgba(75,192,192,1)',
                                 borderWidth: 1,
                             },
                             {
                                 label: 'Medium',
-                                data: [0, 1, 2, 3, 4, 5, 6].map(day => calculateTotalScore('Medium', day, currentWeekStart)),
+                                data: [0, 1, 2, 3, 4, 5, 6].map(day => calculateAverageScore('Medium', day, currentWeekStart)),
                                 backgroundColor: 'rgba(192,75,75,0.4)',
                                 borderColor: 'rgba(192,75,75,1)',
                                 borderWidth: 1,
                             },
                             {
                                 label: 'Difficult',
-                                data: [0, 1, 2, 3, 4, 5, 6].map(day => calculateTotalScore('Difficult', day, currentWeekStart)),
+                                data: [0, 1, 2, 3, 4, 5, 6].map(day => calculateAverageScore('Difficult', day, currentWeekStart)),
                                 backgroundColor: 'rgba(75,75,192,0.4)',
                                 borderColor: 'rgba(75,75,192,1)',
                                 borderWidth: 1,
