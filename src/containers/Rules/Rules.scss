@@ -1,0 +1,25 @@
+.rules-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; // Adjust as needed to center vertically
+  padding: 20px;
+
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 50px;
+  }
+
+  ul {
+    list-style-type: square;
+    list-style-position: inside;
+    padding: 0;
+    margin: 0;
+  }
+
+  li {
+    font-size: 1rem;
+    margin-bottom: 15px;
+  }
+}

@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import AppWrap from "../../wrapper/AppWrap";
+import './Rules.scss'; // Import your SCSS file
 
 function Rules() {
     const textLines = [
@@ -13,19 +14,35 @@ function Rules() {
         'User can delete the game history log. This will delete the chart too.',
         'AI can be used to get the hint or more information.',
     ];
+
+    const listVariants = {
+        hidden: { opacity: 0 },
+        visible: { opacity: 1, transition: { staggerChildren: 0.2 } },
+    };
+
+    const listItemVariants = {
+        hidden: { opacity: 0, y: 20 },
+        visible: { opacity: 1, y: 0 },
+    };
+
     return (
         <motion.div
-            whileInView={{ y: [100, 50, 0], opacity: [0, 0, 1] }}
-            transition={{ duration: 0.5 }}
+            initial="hidden"
+            animate="visible"
+            exit="hidden"
+            variants={listVariants}
             className={'rules-page'}
         >
             <h1>Rules</h1>
-            <ul>
+            <motion.ul transition={{ staggerChildren: 0.2 }}>
                 {textLines.map((line, index) => (
-                    <li key={index}>{line}</li>
+                    <motion.li key={index} variants={listItemVariants}>
+                        {line}
+                    </motion.li>
                 ))}
-            </ul>
+            </motion.ul>
         </motion.div>
     );
 }
+
 export default AppWrap(Rules, 'rules-page', 'rules-page');
