@@ -15,8 +15,6 @@ import correctAnswerSound from '../../sounds/correct.mp3';
 import wrongAnswerSound from '../../sounds/wrong.mp3';
 import clapsSound from '../../sounds/claps.mp3';
 
-
-
 //import {pauseGame, resumeGame} from "../../redux/actions";
 import { setGameHistory } from "../../redux/actions";
 import {ICountry} from "../../types/types";
@@ -86,6 +84,8 @@ function LandingPage() {
                 [level]: prevOffsets[level as keyof typeof prevOffsets] + 10,
             };
 
+            console.log('newOffsets:: ', newOffsets);
+
             // Save the new offsets to localStorage
             localStorage.setItem('offsets', JSON.stringify(newOffsets));
 
@@ -126,6 +126,8 @@ function LandingPage() {
                 const end = start + 10;
                 const slicedData = data.slice(start, end);
 
+                console.log('slicedData:: ', slicedData, 'length:: ', slicedData.length)
+
                 // If the offset exceeds the total number of questions, reset it to 0
                 if (slicedData.length < 10) {
                     setOffsets((prevOffsets: { Easy: number; Medium: number; Difficult: number; }) => {
@@ -133,6 +135,8 @@ function LandingPage() {
                             ...prevOffsets,
                             [selectedLevel as keyof typeof offsets]: 0,
                         };
+
+                        console.log('Inside slicedData.length < 10 loop:::: setOffsets:: ', offsets, 'length:: ', slicedData.length)
 
                         // Save the new offsets to localStorage
                         localStorage.setItem('offsets', JSON.stringify(newOffsets));
