@@ -6,6 +6,7 @@ import WeeklyChart from "./WeeklyChart/WeeklyChart";
 import SocialMedia from "./SocialMedia/SocialMedia";
 import About from "./About/About";
 import PageNotFound from "./PageNotFound/PageNotFound";
+import Rules from "./Rules/Rules";
 
 
 export {
@@ -16,5 +17,6 @@ export {
     WeeklyChart,
     SocialMedia,
     PageNotFound,
-    About
+    About,
+    Rules
 }

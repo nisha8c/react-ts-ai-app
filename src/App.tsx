@@ -3,7 +3,7 @@ import './App.scss';
 
 import { ClerkProvider, SignIn, SignUp } from "@clerk/clerk-react";
 import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
-import {WithSignInProtectionHOC, Welcome, LandingPage, GameHistoryPage, WeeklyChart, PageNotFound} from "./containers";
+import {WithSignInProtectionHOC, Welcome, LandingPage, GameHistoryPage, WeeklyChart, PageNotFound, Rules} from "./containers";
 
 if (!process.env.REACT_APP_CLERK_PUBLISHABLE_KEY) {
     throw new Error("Missing Publishable Key")
@@ -39,6 +39,7 @@ function ClerkProviderWithRoutes() {
                 <Route path="/protected" element={WithSignInProtectionHOC(LandingPage)} />
                 <Route path="/gameHistory" element={WithSignInProtectionHOC(GameHistoryPage)} />
                 <Route path="/chart" element={WithSignInProtectionHOC(WeeklyChart)} />
+                <Route path="/rules" element={WithSignInProtectionHOC(Rules)} />
 
                 <Route path="*" element={<PageNotFound />} />
             </Routes>

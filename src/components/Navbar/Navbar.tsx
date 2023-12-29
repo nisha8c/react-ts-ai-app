@@ -33,6 +33,10 @@ const Navbar = () => {
                     <div />
                     <Button onClick={() => navigate('/chart')}>Weekly Chart</Button>
                 </li>
+                <li className="app__flex p-text">
+                    <div />
+                    <Button onClick={() => navigate('/rules')}>Rules</Button>
+                </li>
             </ul>
 
             <div className="app__navbar-menu">
@@ -53,6 +57,9 @@ const Navbar = () => {
                             </li>
                             <li>
                                 <Button onClick={() => { setToggle(false); navigate('/chart'); }}>Weekly Chart</Button>
+                            </li>
+                            <li>
+                                <Button onClick={() => { setToggle(false); navigate('/rules'); }}>Rules</Button>
                             </li>
                         </ul>
                     </motion.div>
