@@ -16,7 +16,7 @@ const Navbar = () => {
         <nav className="app__navbar">
             <div className="app__navbar-logo">
                 <Link to="/protected">
-                    <img src={images.logo} alt="logo" />
+                    <img src={images.BlackOnWhite} alt="logo" />
                 </Link>
             </div>
 

@@ -18,7 +18,7 @@ function Welcome() {
                     <motion.img
                         whileInView={{ scale: [0, 1] }}
                         transition={{ duration: 1, ease: 'easeInOut' }}
-                        src={images.gcLogo} className="app__app-logo" alt="logo" />
+                        src={images.OriginalLogo} className="app__app-logo" alt="logo" />
                     <Button variant="outlined" size="large" onClick={handleClick}>Let's Start!</Button>
                 </header>
             </motion.div>
